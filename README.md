@@ -13,8 +13,6 @@ Portable **agent** prompt pack: heavy reasoning stays in the host’s **reasonin
 1. **Reasoning channel** — Framing, TM1–TM6, ≥X approaches with pros/cons, deliberation, tool notes.
 2. **User-visible message** — Only what the user should read: answers, code, steps, refusals—**no** `## How should I think…`, **no** `## Thinking`, **no** TM/A labels, **no** “following the skill” narration.
 
-That matches products that already split **深度思考 / reasoning** from the **main answer**, without asking humans to read prompt mechanics.
-
 ## Is that diagnosis fair? A sharp read
 
 **Partly yes.** Pushing structure into a hidden reasoning strip improves chat UX and auditability for power users who open the trace.
@@ -39,10 +37,14 @@ prompts/think-before-answer/
 ## How to use
 
 Inject `SKILL.md` into **system / developer** instructions for the model. Optionally add `reference.md` or `examples.md` for context. Do not paste SKILL.md into end-user chats as “documentation” unless you intend to.
+#Or olso can inject skill in openclaw.
 
-## Version
+##Effect
+#Use skill:
+<img width="395" height="440" alt="屏幕截图 2026-03-29 120458" src="https://github.com/user-attachments/assets/da4644c8-68d3-4470-818f-60e5d9b5c413" />
+#no skill use:
+<img width="418" height="1197" alt="屏幕截图 2026-03-29 120444" src="https://github.com/user-attachments/assets/f3ab5e3f-6fab-4802-97be-06569d2e4f4d" />
 
-- **Current**: **2.0.0** — **Breaking:** Removes the old requirement to print three `##` sections in the user-visible message; reasoning must live in the reasoning channel or remain internal.
 
 ## License
 
