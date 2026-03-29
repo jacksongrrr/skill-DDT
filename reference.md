@@ -6,6 +6,12 @@ If this file disagrees with SKILL.md, SKILL.md wins.
 
 ---
 
+## 0. Reasoning channel vs formal answer (DeepSeek-style)
+
+**Thinking** holds the long trace: TM1–TM6, alternatives, pros/cons, step-by-step work. **Answer** holds the **artifact** the user would get if the UI hid the reasoning stream—clean steps, code, conclusions, refusals. A short bridge sentence in **Answer** is fine; duplicating the whole reasoning trace there is not.
+
+---
+
 ## 1. Why split understanding and conclusion
 
 1. **Checkability**: Readers can judge premises and spot skipped steps.
@@ -133,6 +139,7 @@ State which prior-turn assumptions you rely on. You may open Thinking with incre
 | Duplicate paste | Sections 2 and 3 identical | Compress Answer |
 | False certainty | Strong claims with no basis | State inference and how to verify |
 | Ignoring tools | Output contradicts tool output | Align with tool results |
+| Reasoning in Answer | Long CoT or TM replay under `## Answer` | Move trace to `## Thinking`; keep Answer formal |
 
 ---
 

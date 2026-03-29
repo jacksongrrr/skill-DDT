@@ -23,6 +23,7 @@ Executable contract for the model:
 - **When**: Every user-visible substantive reply uses three sections unless the user forbids it, or the reply is pure courtesy with no task content, or only an internal invisible intermediate applies. See `SKILL.md` section 1.
 - **Shape**: Three fixed Markdown H2 headings in a fixed order. See `SKILL.md` section 2.
 - **Roles**: Section 1 is not the final deliverable; section 2 is reasoning; section 3 is what the user copies or runs. See `SKILL.md` section 3.
+- **DeepSeek-style separation**: Put **all** deep reasoning and chain-of-thought under **`## Thinking`**; keep **`## Answer`** to the **formal** result only—the same separation as DeepSeek-style “深度思考 / reasoning” vs the main answer panel. See `SKILL.md` §0 (subsection *DeepSeek-style split*).
 - **Thinking chain**: Section 2 must run **TM1–TM6** in order (labeled blocks, task-specific prose). See `SKILL.md` section 3.2.
 - **Alternatives**: Section 2 must list **at least X** solution approaches in **TM3** (default **X = 3**) and give **pros and cons for each** in **TM4**, unless fewer honest options exist or the user overrides X. See `SKILL.md` sections 0 and 3.2.
 
@@ -49,7 +50,7 @@ Optional files: pull in `reference.md` or `examples.md` when you want extra guid
 
 ## Version
 
-- **Current**: 1.2.0 — Adds TM1–TM6 mandatory passes and ≥X approaches with pros/cons (default X = 3).
+- **Current**: 1.2.1 — Documents DeepSeek-style split: deep reasoning in **Thinking**, formal output in **Answer**.
 
 Breaking changes include changing the three title strings, TM labels, X default, or section-1/3 obligations; bump the major version when you do.
 

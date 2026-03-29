@@ -2,8 +2,8 @@
 name: think-before-answer
 description: >-
   Three-part replies: "How should I think about this question", "Thinking", "Answer".
-  Thinking must run six labeled passes TM1–TM6 in order, including at least X distinct solution approaches each with pros and cons (default X=3).
-  Section 3 delivers the outcome. Use for Q&A, code, docs, refusals, and multi-step tasks unless the user overrides.
+  All extended reasoning, deliberation, and chain-of-thought stay under Thinking; Answer is the formal deliverable only (same idea as DeepSeek-style deep thinking vs final answer).
+  Thinking runs TM1–TM6 and at least X approaches with pros/cons (default X=3). Use for Q&A, code, docs, refusals, and multi-step tasks unless the user overrides.
 ---
 
 # Think Before Answer
@@ -14,13 +14,19 @@ When this file is in your context, your default user-visible reply must not be a
 
 You must structure the reply as three phases: state how you understand the problem and how you will tackle it, show your reasoning, then give the finished answer.
 
+### DeepSeek-style split (reasoning vs formal answer)
+
+Treat **`## Thinking`** as the **deep-reasoning channel**: everything involved in **working through** the problem goes here—step-by-step deduction, deliberation, weighing options, intermediate checks, and the full **TM1–TM6** material.
+
+Treat **`## Answer`** as the **final user-facing reply** after that reasoning: **only** the polished outcome to read, copy, or execute. Do **not** run a second full chain-of-thought inside **Answer**. Do **not** put the real reasoning mainly in **Answer** while **Thinking** stays thin. Where products such as DeepSeek separate **深度思考 / reasoning traces** from the **main answer**, map the former to **Thinking** and the latter to **Answer**.
+
 **Parameter X**: Minimum number of distinct solution approaches to enumerate in section 2, each with explicit pros and cons. **Default X = 3.** If the user states another positive integer in this conversation, use that as X instead. If the user states X = 1 or asks for a single approach only, follow the user; note the override in **TM5** and skip multi-approach enumeration beyond what they allow.
 
 These are binding output rules:
 
 - **Section 1**: Only framing—intent, gaps, angles, plan. Preview that section 2 will enumerate at least X approaches with pros and cons and will run TM1–TM6. Do not state the final answer here. Do not paste full production code here unless the user asks for a single token with no explanation and you note that exception in this section.
-- **Section 2**: Must include the full **TM1–TM6 chain** in order and the **≥X approaches with pros and cons** rule as specified in §3.2. Do not treat this section alone as the deliverable; the user should not have to stop after this section to get the job done.
-- **Section 3**: The actionable outcome: conclusions, steps, code, tables, refusal text, or alternatives. Name the **chosen approach** among those considered and keep pros/cons detail short unless the user needs the full matrix repeated.
+- **Section 2**: Must include the full **TM1–TM6 chain** in order and the **≥X approaches with pros and cons** rule as specified in §3.2. This is where **all** substantive reasoning volume lives. Do not treat this section alone as the deliverable; the user should not have to stop after this section to get the job done.
+- **Section 3**: The **formal** outcome only: conclusions, steps, code, tables, refusal text, or alternatives—without repeating the deep reasoning trace. Name the **chosen approach** among those considered and keep pros/cons detail short unless the user needs the full matrix repeated.
 
 If you output only section 3, leave section 1 or 2 empty, omit one of the three headings, or reorder them, you have not followed this skill. Rewrite into the required shape before sending.
 
@@ -126,19 +132,21 @@ You must apply **all six** passes below to **this specific user question**. Each
 - Skipping or reordering TM1–TM6.
 - Listing fewer than X candidates in TM3 without the honest “fewer than X exist” justification when the task admits multiple approaches.
 - Pasting the same paragraphs you will use verbatim in section 3. Section 2 may be detailed; section 3 should **compress** into a deliverable.
+- Offloading the **main** reasoning to **Answer** while **Thinking** stays shallow. The heavy lift belongs under **Thinking**.
 
 ### 3.3 `## Answer`
 
 **Required:**
 
-- Directly complete the task: copy-paste-ready code, executable steps, decision-ready conclusions, or a clear refusal and alternatives.
+- Deliver the **formal reply** only: copy-paste-ready code, executable steps, decision-ready conclusions, or a clear refusal and alternatives—written as you would show a user **after** deep reasoning is done.
 - **State the chosen approach** (by name or A1/A2/…) so it is obvious which option from TM3–TM5 you delivered.
 - Use lists, tables, subheadings, and fenced code blocks with language tags when useful.
-- If section 2 already explained the reasoning, section 3 should give conclusion plus only the summary the user needs, not a full duplicate of TM1–TM6.
+- You may add a **short** bridging sentence or mini-summary of why this answer follows from **Thinking**; do **not** paste the full TM blocks or a second chain-of-thought here.
 
 **Forbidden:**
 
 - Section 3 that only says "see Thinking above" without a self-contained usable answer. The user should not need section 2 to act, unless they explicitly asked for process only.
+- Long step-by-step internal reasoning, alternative-by-alternative debate, or scratchpad-style derivation in **Answer**—those belong in **Thinking**.
 
 ---
 
@@ -163,6 +171,7 @@ Perform mentally. Do not print this list to the user unless they ask.
 - [ ] Is the section 1 title spelled with **should**?
 - [ ] Does **Thinking** contain **TM1 through TM6** in order, each with a label line and task-specific prose?
 - [ ] Does **TM3** list **at least X** candidates when that many honest options exist, and does **TM4** give **pros and cons for every** TM3 candidate?
+- [ ] Is **deep reasoning concentrated in Thinking**, with **Answer** limited to the formal deliverable plus at most a brief bridge?
 
 ---
 

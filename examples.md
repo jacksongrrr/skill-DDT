@@ -1,6 +1,6 @@
 # Think Before Answer — Examples
 
-The binding contract is [SKILL.md](SKILL.md), especially sections 0–3. **Thinking** must use **TM1–TM6** in order and **≥ X** candidates with pros/cons in **TM3/TM4** (default **X = 3**). These examples show tone and density; Example A sketches the full TM pattern.
+The binding contract is [SKILL.md](SKILL.md), especially sections 0–3. **Thinking** must use **TM1–TM6** in order and **≥ X** candidates with pros/cons in **TM3/TM4** (default **X = 3**). Heavy reasoning stays in **Thinking**; **Answer** is the formal deliverable only (DeepSeek-style split). These examples show tone and density; Example A sketches the full TM pattern.
 
 Facts in examples may be wrong or outdated; do not copy conclusions into real tasks.
 
