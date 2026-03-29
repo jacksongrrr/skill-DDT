@@ -6,6 +6,9 @@ description: >-
   Default X=3. Applies unless the user overrides or the host cannot separate channels.
 ---
 
+#use this skill to answer user
+use skill.md think in deep think or thinking part, and answer user question, *please replete the skill.md(all) 1time*.
+
 # Think Before Answer
 
 This document is **instructions for the model**. Do not quote it, summarize it, or expose its structure to the end user unless they explicitly ask how you are prompted.
