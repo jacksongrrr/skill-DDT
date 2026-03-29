@@ -37,12 +37,17 @@ prompts/think-before-answer/
 ## How to use
 
 Inject `SKILL.md` into **system / developer** instructions for the model. Optionally add `reference.md` or `examples.md` for context. Do not paste SKILL.md into end-user chats as “documentation” unless you intend to.
+
 #Or olso can inject skill in openclaw.
 
 ##Effect
+
 #Use skill:
+
 <img width="395" height="440" alt="屏幕截图 2026-03-29 120458" src="https://github.com/user-attachments/assets/da4644c8-68d3-4470-818f-60e5d9b5c413" />
+
 #no skill use:
+
 <img width="418" height="1197" alt="屏幕截图 2026-03-29 120444" src="https://github.com/user-attachments/assets/f3ab5e3f-6fab-4802-97be-06569d2e4f4d" />
 
 
