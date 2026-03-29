@@ -1,10 +1,9 @@
 ---
 name: think-before-answer
 description: >-
-  Splits every substantive user-visible assistant reply into three Markdown sections with fixed H2 titles:
-  "How should I think about this question", "Thinking", and "Answer".
-  Section 1 states problem understanding and approach only; section 2 holds reasoning and evidence; section 3 holds the deliverable.
-  Applies unless the user explicitly forbids this layout; use for Q&A, code, docs, refusals, and multi-step tasks.
+  Three-part replies: "How should I think about this question", "Thinking", "Answer".
+  Thinking must run six labeled passes TM1–TM6 in order, including at least X distinct solution approaches each with pros and cons (default X=3).
+  Section 3 delivers the outcome. Use for Q&A, code, docs, refusals, and multi-step tasks unless the user overrides.
 ---
 
 # Think Before Answer
@@ -15,11 +14,13 @@ When this file is in your context, your default user-visible reply must not be a
 
 You must structure the reply as three phases: state how you understand the problem and how you will tackle it, show your reasoning, then give the finished answer.
 
+**Parameter X**: Minimum number of distinct solution approaches to enumerate in section 2, each with explicit pros and cons. **Default X = 3.** If the user states another positive integer in this conversation, use that as X instead. If the user states X = 1 or asks for a single approach only, follow the user; note the override in **TM5** and skip multi-approach enumeration beyond what they allow.
+
 These are binding output rules:
 
-- **Section 1**: Only framing—intent, gaps, angles, plan. Do not state the final answer here. Do not paste full production code here unless the user asks for a single token with no explanation and you note that exception in this section.
-- **Section 2**: Goals, constraints, reasoning, evidence, trade-offs, risks. Do not treat this section alone as the deliverable; the user should not have to stop after this section to get the job done.
-- **Section 3**: The actionable outcome: conclusions, steps, code, tables, refusal text, or alternatives.
+- **Section 1**: Only framing—intent, gaps, angles, plan. Preview that section 2 will enumerate at least X approaches with pros and cons and will run TM1–TM6. Do not state the final answer here. Do not paste full production code here unless the user asks for a single token with no explanation and you note that exception in this section.
+- **Section 2**: Must include the full **TM1–TM6 chain** in order and the **≥X approaches with pros and cons** rule as specified in §3.2. Do not treat this section alone as the deliverable; the user should not have to stop after this section to get the job done.
+- **Section 3**: The actionable outcome: conclusions, steps, code, tables, refusal text, or alternatives. Name the **chosen approach** among those considered and keep pros/cons detail short unless the user needs the full matrix repeated.
 
 If you output only section 3, leave section 1 or 2 empty, omit one of the three headings, or reorder them, you have not followed this skill. Rewrite into the required shape before sending.
 
@@ -37,7 +38,7 @@ Use the three-section layout for every user-visible reply that contains substant
 
 1. The user clearly asks in this turn not to split sections, not to show reasoning, or only wants the result. Follow the user. If you still use three headings, start section 2 with: `Per the user's request, structured sections are collapsed; the following merges narrative and conclusion.` Then output in the shape they asked for.
 2. Intermediate states invisible to the user. The final message aggregated for the user must still comply.
-3. **Pure courtesy with no task content**—for example only "OK" or "Got it" with no substantive follow-up. You may shorten reasoning, but you must still emit all three `##` headings: section 1 one sentence stating no new substantive information; section 2 one sentence stating no reasoning required; section 3 the courtesy line.
+3. **Pure courtesy with no task content**—for example only "OK" or "Got it" with no substantive follow-up. You may shorten reasoning, but you must still emit all three `##` headings: section 1 one sentence stating no new substantive information; section 2 one sentence stating no reasoning required; section 3 the courtesy line. **TM1–TM6 and ≥X approaches do not apply** to this exception.
 
 No other exemptions. Convenience is not a reason to skip sections.
 
@@ -84,7 +85,7 @@ Rules:
 
 - Restate what the user wants in your own words in 1–3 sentences so the task type is clear: explain, implement, debug, compare, or other.
 - State what you know and what is missing. If you can proceed without the missing pieces, state default assumptions. If guessing would be unsafe, say you will give conditional guidance or list minimal questions in section 3.
-- In 1–2 sentences, state which angles you will use. Do not put full derivations here.
+- In 1–2 sentences, state that **Thinking** will run **TM1–TM6** and list **at least X** solution approaches with pros and cons unless the task is covered by the courtesy exception or the user has capped X.
 
 **Length:**
 
@@ -98,16 +99,32 @@ Rules:
 
 ### 3.2 `## Thinking`
 
-**Required**—adapt to the task; the section must not be empty:
+The **Thinking** section must not be empty. It has two stacked requirements: **(A) the TM1–TM6 passes** and **(B) at least X approaches with pros and cons** inside the appropriate passes.
 
-- **Goals**: explicit and plausible implicit goals such as time, maintainability, or safety.
-- **Constraints**: language, platform, user rules, compliance, project conventions you will honor.
-- **Reasoning**: how you move from premises to the chosen approach; if multiple options exist, compare and justify the choice.
-- **Uncertainty and verification**: what might be wrong; whether claims rest on inference or tool output. If you used tools or read files, one sentence on the source. Do not leak secrets.
+#### A. Mandatory thinking-method chain (recapitulate every pass)
+
+You must apply **all six** passes below to **this specific user question**. Each pass gets its **own labeled block** in **numeric order TM1 → TM6**. Use this exact label line at the start of each block (bold Markdown):
+
+- `**TM1 — Intent and scope**` — Restate the user’s goal, boundaries, and what “done” means for this turn.
+- `**TM2 — Facts, gaps, and assumptions**` — What you know from the message and context; what is missing; assumptions you adopt to proceed.
+- `**TM3 — Candidate approaches**` — List **at least X** distinct, serious candidate ways to address the problem (methods, designs, strategies, or interpretations as appropriate). Label them **A1, A2, A3, …** with at least **X** entries when that many honest options exist. If you list more than X, continue numbering. If fewer than X **honestly distinct** approaches exist, list **every** defensible alternative and explain under this same block why further distinct approaches would be artificial; do not invent fake options.
+- `**TM4 — Pros and cons**` — For **each** candidate listed in TM3, give **explicit advantages and disadvantages** relative to the user’s goals and constraints. You may use a sub-list per candidate or a compact table; every candidate from TM3 must appear again here.
+- `**TM5 — Commitment**` — State which approach you adopt (possibly a hybrid). Tie the choice to TM4. If the user forced a single approach, state that and map it to this pass.
+- `**TM6 — Verification and risks**` — How to validate the result; residual uncertainties; tool or data dependencies. If you used tools or files, state how outputs fed TM3–TM5. Do not leak secrets.
+
+**Recapitulation rule:** Do not collapse TM1–TM6 into one paragraph. Do not skip a TM by referring to it only in passing. Each label must be followed by prose that **uses** that method on the current task, not generic filler.
+
+#### B. Minimum X and pros/cons
+
+- **X** is defined in §0 (default **3**).
+- Every candidate in TM3 must receive **both** pros **and** cons in TM4.
+- If the problem is a closed single-path fact (e.g. a unique standard definition) and multiple “approaches” would be contrived, satisfy TM3/TM4 by listing **all** genuinely distinct lenses you could use to derive or justify the same answer (e.g. direct recall vs. derivation vs. sanity check), or state clearly why only one substantive approach exists and keep TM4 honest for that single path.
 
 **Forbidden:**
 
-- Keyword lists with no explanatory sentences; each bullet needs at least one supporting sentence.
+- Keyword lists with no explanatory sentences; each TM block needs intelligible prose.
+- Skipping or reordering TM1–TM6.
+- Listing fewer than X candidates in TM3 without the honest “fewer than X exist” justification when the task admits multiple approaches.
 - Pasting the same paragraphs you will use verbatim in section 3. Section 2 may be detailed; section 3 should **compress** into a deliverable.
 
 ### 3.3 `## Answer`
@@ -115,8 +132,9 @@ Rules:
 **Required:**
 
 - Directly complete the task: copy-paste-ready code, executable steps, decision-ready conclusions, or a clear refusal and alternatives.
+- **State the chosen approach** (by name or A1/A2/…) so it is obvious which option from TM3–TM5 you delivered.
 - Use lists, tables, subheadings, and fenced code blocks with language tags when useful.
-- If section 2 already explained the reasoning, section 3 should give conclusion plus only the summary the user needs, not a full duplicate.
+- If section 2 already explained the reasoning, section 3 should give conclusion plus only the summary the user needs, not a full duplicate of TM1–TM6.
 
 **Forbidden:**
 
@@ -143,6 +161,8 @@ Perform mentally. Do not print this list to the user unless they ask.
 - [ ] Did section 1 avoid jumping ahead to the final deliverable?
 - [ ] Does section 3 alone contain what the user needs to use?
 - [ ] Is the section 1 title spelled with **should**?
+- [ ] Does **Thinking** contain **TM1 through TM6** in order, each with a label line and task-specific prose?
+- [ ] Does **TM3** list **at least X** candidates when that many honest options exist, and does **TM4** give **pros and cons for every** TM3 candidate?
 
 ---
 

@@ -1,6 +1,6 @@
 # Think Before Answer — Examples
 
-The binding contract is [SKILL.md](SKILL.md), especially sections 0–3. These examples show tone and density only. Do not skip a rule because an example omits detail.
+The binding contract is [SKILL.md](SKILL.md), especially sections 0–3. **Thinking** must use **TM1–TM6** in order and **≥ X** candidates with pros/cons in **TM3/TM4** (default **X = 3**). These examples show tone and density; Example A sketches the full TM pattern.
 
 Facts in examples may be wrong or outdated; do not copy conclusions into real tasks.
 
@@ -15,16 +15,31 @@ Facts in examples may be wrong or outdated; do not copy conclusions into real ta
 ```markdown
 ## How should I think about this question
 
-You are choosing an API style. I will clarify what each style optimizes for, compare request shape, caching, versioning, and team cost, then give scenario-based guidance without claiming a universal winner.
+You are choosing an API style. In Thinking I will run TM1–TM6, list at least three candidate ways to decide (A1–A3+), give pros and cons for each, then commit to guidance. Answer will give the table and recommendations without repeating the full TM chain.
 
 ## Thinking
 
-- **Goal**: A decision guide, not a glossary.
-- **Constraints**: No stack, team size, or client type given; recommendations stay conditional with a default assumption of a general web API.
-- **Contrast**: REST fits resource modeling and HTTP caching; GraphQL fits flexible field selection and aggregation with higher operational complexity.
-- **Trade-offs**: Documentation, gateways, errors, uploads, and realtime needs matter.
-- **Risk**: Mobile or BFF context could change the answer; you may need to add constraints.
-- **Plan**: Comparison table plus conditional recommendations.
+**TM1 — Intent and scope**
+You want differences plus a decision guide for picking a style for a typical web API context this turn.
+
+**TM2 — Facts, gaps, and assumptions**
+No stack, team size, or client shape given. I assume a generic browser/mobile client and a single backend unless you correct me.
+
+**TM3 — Candidate approaches**
+- **A1** — Choose REST-first with HTTP semantics and mature caching.
+- **A2** — Choose GraphQL for flexible client-driven fields and aggregation.
+- **A3** — Use a hybrid: REST for simple resources, GraphQL or BFF for complex reads.
+
+**TM4 — Pros and cons**
+- **A1 pros:** Simple mental model, CDN and HTTP cache friendly, broad tooling. **A1 cons:** Over/under-fetching, many round-trips for rich UIs.
+- **A2 pros:** Precise payloads, one endpoint, good for varied clients. **A2 cons:** Caching and operation complexity, schema discipline, N+1 risk without care.
+- **A3 pros:** Matches mixed simplicity and flexibility. **A3 cons:** Two styles to operate; boundary decisions add overhead.
+
+**TM5 — Commitment**
+Recommend conditional: start from product and client variance—highly variable frontends lean A2; cacheable resource CRUD leans A1; mixed products often land on A3.
+
+**TM6 — Verification and risks**
+Validate with load patterns, cache needs, and team GraphQL maturity. Residual risk: unknown mobile constraints or existing gateway investment.
 
 ## Answer
 

@@ -44,18 +44,20 @@ You may use plain paragraphs. Logical threads can include:
 
 ---
 
-## 3. Section 2 — "Thinking" dimensions
+## 3. Section 2 — "Thinking" structure
 
-Pick what fits; omit what does not apply. Omissions must not break the reasoning chain.
+SKILL.md **§3.2** is authoritative: **TM1–TM6** must all appear **in order**, each labeled and filled with **task-specific** prose. **TM3** must list **≥ X** candidates (default X = 3) when that many honest options exist; **TM4** must give **pros and cons for every** TM3 candidate.
 
-### 3.1 General
+The lists below are **content reminders** to weave **inside** the TM passes where relevant. They are **not** a substitute for skipping TM labels.
+
+### 3.1 General (often TM1–TM2 and parts of TM5–TM6)
 
 1. Stated goal vs deeper goals such as efficiency, safety, maintainability, compliance.
 2. Stakeholders when relevant: team, end users, operations.
 3. One-shot answer vs long-lived design.
 4. Evidence strength: inference, docs, experiment, authority, or explicit uncertainty.
 
-### 3.2 Software
+### 3.2 Software (often TM2–TM4 when comparing implementations)
 
 - Stack: language version, framework, OS, dependencies.
 - Change scope: minimal fix vs refactor; public API impact.
@@ -80,6 +82,10 @@ Pick what fits; omit what does not apply. Omissions must not break the reasoning
 - Dual-use risk.
 - Jurisdiction and compliance differences.
 - Refusal plus lawful alternatives when applicable.
+
+### 3.6 Refusal or policy-limited tasks
+
+Still run **TM1–TM6**. **TM3** may list only compliant response patterns (e.g. refuse, redirect, high-level safe education). **TM4** compares their pros and cons for safety and user experience. Do not invent harmful “approaches” to pad X.
 
 ---
 
@@ -119,7 +125,10 @@ State which prior-turn assumptions you rely on. You may open Thinking with incre
 | Issue | Symptom | Fix |
 |-------|---------|-----|
 | Wrong title word | Misspelling "should" | Use the exact SKILL.md string |
-| Hollow Thinking | Labels only, no sentences | At least one sentence per point |
+| Skipped TM | Missing TM4 or merged TM2+TM3 | Emit TM1–TM6 in order with labels |
+| Too few options | TM3 lists one approach when three honest ones exist | Add real alternatives or justify scarcity |
+| TM4 mismatch | Pros/cons missing for an TM3 candidate | Cover every A1, A2, … from TM3 |
+| Hollow Thinking | Labels only, no sentences | Substantive prose per TM block |
 | Answer in section 1 | Final verdict in framing | Keep framing non-final |
 | Duplicate paste | Sections 2 and 3 identical | Compress Answer |
 | False certainty | Strong claims with no basis | State inference and how to verify |
@@ -153,11 +162,14 @@ More specific domain rules take precedence over this layout. If you merge rules,
 
 ## 9. Extended self-check
 
-1. If Thinking were removed, could the user still see why Answer is justified?
-2. If Answer were removed, could the user reconstruct a usable conclusion from Thinking? If not, Answer is incomplete.
-3. Are the three titles character-exact?
-4. Any leaked secrets, tokens, or private data?
-5. User rules on language, format, and prohibitions satisfied?
+1. Are **TM1–TM6** all present, in order, each with a label line and non-generic content?
+2. Does **TM3** meet the **≥ X** rule or document why fewer candidates are honest?
+3. Does **TM4** list **pros and cons for every** TM3 candidate?
+4. If Thinking were removed, could the user still see why Answer is justified?
+5. If Answer were removed, could the user reconstruct a usable conclusion from Thinking? If not, Answer is incomplete.
+6. Are the three section titles character-exact?
+7. Any leaked secrets, tokens, or private data?
+8. User rules on language, format, and prohibitions satisfied?
 
 ---
 
